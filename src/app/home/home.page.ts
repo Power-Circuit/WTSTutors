@@ -1,5 +1,10 @@
-import { Component, AfterViewInit, ViewChild, Renderer2 } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Renderer2 , NgZone} from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { File } from '@ionic-native/file/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+
+
 
 @Component({
   selector: 'app-home',
@@ -8,31 +13,23 @@ import { Platform } from '@ionic/angular';
 })
 export class HomePage {
 	@ViewChild('imageCanvas', {static: false}) canvas: any;
-	isDrawing = false;
+	isDrawing = false; //check if user is pressing on board or not
 	//canvasElement: any;
-	saveX: number;
-	saveY: number;
+	saveX: number; //track x coordinate of touch
+	saveY: number; //track y coordinate of touch
+	nativepath: any; //track path of fetchd image
+	currentColor = '#fff'; //track current selected color
+	colors = ['#ff0','#f00', '#0f0','#00f', '#0ff','#fff','#000']; //array of availale colors
+	lineWidth = 5; //track drawing line width
+	canvasElement: any; //object to store canvas object
+		lastX; //track last x coordinate of touch
+		lastY; //track last r coordinate of touch
+       
 	
-	currentColor = '#fff';
-	colors = ['#ff0','#f00', '#0f0','#00f', '#0ff','#fff','#000'];
-	lineWidth = 5;
-	canvasElement: any;
-		lastX;
-		lastY;
-        color; ;
-        notes = [];
-        brushSize = 10;
-	
-  constructor(private plt: Platform, public renderer: Renderer2) {}
+  constructor(private plt: Platform, public renderer: Renderer2, public filechooser: FileChooser, public zone: NgZone) {}
   
-  ngAfterViewInit(){
-	 /* setTimeout(() => {
-	  this.canvasElement = this.canvas.nativeElement;
-	  this.canvasElement.width = this.plt.width() + '';
-	  this.canvasElement.height = (this.plt.height() * (75/100)) + '';
-	  },3000);
-	  */
-	  
+  ngAfterViewInit(){//inizialize drawing board
+	
 	    this.canvasElement = this.canvas.nativeElement;
         //this.can.thecanvas = this.canvas;
         this.renderer.setAttribute(this.canvasElement, 'width', this.plt.width() * (99.5/100) + '');
@@ -41,10 +38,10 @@ export class HomePage {
 		ctx.fillStyle ="black";
 		ctx.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
 		//
-		this.brushSize = 6;
+	
   }
   
-   handleStart(ev){
+   handleStart(ev){ //when user touches down on board
 		let dataUrl = this.canvasElement.toDataURL();
 
 	  // this.undo.push(dataUrl);
@@ -53,7 +50,7 @@ export class HomePage {
     }
 	
 	
-    handleMove(ev){
+    handleMove(ev){ //when user moves finger on board
         var ctx = this.canvasElement.getContext('2d');
         var currentX = ev.touches[0].pageX;
         var currentY = ev.touches[0].pageY;
@@ -72,6 +69,49 @@ export class HomePage {
    handleEnd(ev){
 	   		
    }
+   
+   uploadpic(){
+        
+        var ctx = this.canvasElement.getContext('2d');
+		var im = new Image();
+        this.fetchImage().then((uploadedurl: any) =>{
+			
+			im.src = uploadedurl;
+			im.crossOrigin = 'Anonymous';
+
+			im.onload = () => {
+				this.zone.run(() => {
+				alert("draw before then event: " + im.src);
+				
+				ctx.drawImage(im, 0, 0, this.canvasElement.width, this.canvasElement.height);
+		  })
+
+			};
+			im.src = uploadedurl;
+			
+        }).then(() => {
+			 this.zone.run(() => {
+				alert("draw after then event: " + im.src);
+				
+				ctx.drawImage(im, 0, 0, this.canvasElement.width, this.canvasElement.height);
+		  })
+		})
+    }
+   
+    fetchImage(){
+	  var promise = new Promise((resolve, reject) => {
+		  this.filechooser.open().then((url) => {
+			  (<any>window).FilePath.resolveNativePath(url, (result) => {
+				  this.nativepath = result;
+					  resolve(result);
+				  })
+			  }).catch((err) => {
+			  reject(err);
+		  })
+		 })
+	  
+	  return promise;
+  }
   
   
   
@@ -118,7 +158,7 @@ export class HomePage {
 	   this.isDrawing = false;
   }*/
   
-  selectColor(col){
+  selectColor(col){ //change pen color
 	  this.currentColor = col;
   }
   

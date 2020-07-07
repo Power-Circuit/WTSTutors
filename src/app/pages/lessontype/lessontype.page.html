@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>lessontype</ion-title>
+	<ion-button routerLink="/chalkboard" routerDirection="forward" right>
+	Start
+	</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+	<ion-input type="text" placeholder="Lesson title" [(ngModel)]="les.lessonName"></ion-input>
+		 
+		<ion-item>
+			<ion-label>Grade</ion-label>
+		   <ion-select [(ngModel)]="les.Grade" [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+          <ion-select-option value="12">Grade 12</ion-select-option>
+          <ion-select-option value="11">Grade 11</ion-select-option>
+          <ion-select-option value="10">Grade 10</ion-select-option>
+          <ion-select-option value="9">Grade 9</ion-select-option>
+ 
+          </ion-select>
+      </ion-item>
+	  
+		 <ion-item>
+        <ion-label>Subject</ion-label>
+		
+        <ion-select  [(ngModel)]="les.Subject" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One">
+          <ion-select-option value="math">Math</ion-select-option>
+          <ion-select-option value="mathlit">Math Literacy</ion-select-option>
+          <ion-select-option value="lifesci">Life Science</ion-select-option>
+          <ion-select-option value="acc">Accounting</ion-select-option>
+          <ion-select-option value="ecos">Economics</ion-select-option>
+          <ion-select-option value="geo">Geography</ion-select-option>
+          </ion-select>
+		   </ion-item>
+	
+	</ion-list>
+	<ion-button (click)="save()" right>
+	Save
+	</ion-button>
+</ion-content>

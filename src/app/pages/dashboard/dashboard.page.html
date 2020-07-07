@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>dashboard</ion-title>
+	<ion-button routerLink="/lessontype" routerDirection="forward" right>
+	New lesson
+	</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-button (click) = "playVideoHosted()" right>
+	Play video
+	</ion-button>
+ <ion-grid>
+		<ion-row >
+			<ion-col  *ngFor = "let item of lessons" col-6>
+
+			<ion-card color = "white"  class = "over"  >
+				<ion-card-header style = "background-color: #fff;color: #000;">
+					<ion-row>
+					<ion-col col-10>
+					{{item.lessonName}}
+					</ion-col>	
+					<ion-col col-2>	
+				<ion-button color="light"  large clear (click)="deleteLesson(item)" ><ion-icon name="close"></ion-icon></ion-button>
+
+				</ion-col>
+				</ion-row>
+				</ion-card-header >
+				<img (click)="load(item)" routerLink="/chalkboard" routerDirection="forward" src={{item.slides[0]}} >
+
+				<ion-card-content  style = "background-color: #fff">
+					
+				</ion-card-content>
+					   
+
+			</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+  
+</ion-content>

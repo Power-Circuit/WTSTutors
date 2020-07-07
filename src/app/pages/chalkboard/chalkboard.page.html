@@ -1,8 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      WTS tutors
+      WTS tutors - {{les.lessonName}}
+	  <ion-button routerLink="/dashboard" routerDirection="forward" right>
+	Home
+	</ion-button>
     </ion-title>
+	
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +17,19 @@
 	<canvas #imageCanvas (touchstart)="handleStart($event)" (mousedown) = "handleStart($event)" (touchmove)="handleMove($event)" (mousemove) = "handleMove($event)" (touchend) = "handleEnd($event)" (mouseup) = "handleEnd($event)" ></canvas>
 	</div>
 	<ion-toolbar id="top-toolbar" ion-fixed>
-	<button color="light" ion-button icon-only (click)="uploadpic()"><ion-icon name="photos"></ion-icon></button>
+	<ion-button routerLink="/tutorial" routerDirection="forward" right>
+	Tutorials
+	</ion-button>
+	<ion-button routerLink="/slides" routerDirection="forward" right>
+	Slides
+	</ion-button>
+	<ion-button  (click) = "saveCanvasImage()" right>
+	save
+	</ion-button>
+	
+	<ion-button  (click) = "doundo()" right>
+	Undo
+	</ion-button>
 	<ion-row>
 		<ion-col *ngFor = "let color of colors " [style.background] = "color" class="color-block" tappable (click) = "selectColor(color)">
 		</ion-col>
@@ -33,3 +49,4 @@
 	</ion-range>
 	</ion-toolbar>
 </ion-content>
+
