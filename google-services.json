@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "180460090509",
+    "firebase_url": "https://wtstutors.firebaseio.com",
+    "project_id": "wtstutors",
+    "storage_bucket": "wtstutors.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180460090509:android:d27c7131ed3a7a14599ec4",
+        "android_client_info": {
+          "package_name": "io.ionic.wts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180460090509-k6hi0n38t5b36sejepk1l1h76mfnbj2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPgrxhOM5TzQV7vJXPIvqvWgpN84ZEDkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180460090509-k6hi0n38t5b36sejepk1l1h76mfnbj2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

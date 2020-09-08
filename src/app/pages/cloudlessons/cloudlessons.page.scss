@@ -1,0 +1,83 @@
+.header{
+	font-family: 'Play', sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+	color: #294a70;
+	
+}
+
+.toolb{
+	background-color: rgba(41, 74, 112,0.3);
+	font-size: 10px;
+}
+
+.card{
+		
+		box-shadow: none;
+		background: rgba(0,0,0,0.3);
+		border-radius: 5px;
+	
+}
+
+img{
+	width: 100%;
+}
+
+a,p,
+ion-card-header.card-header {
+	color: #f4a024!important;
+}
+
+.headerCard{
+	font-family: 'Play', sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+	color: #fff;
+	
+}
+
+	@-webkit-keyframes slideInUp {
+  0% {
+  -webkit-transform: translateY(200%);
+  }
+  100% {
+  -webkit-transform: translateY(0%);
+  }
+  }
+ 
+  
+  .slideInUp {
+  -webkit-animation-name: slideInUp;
+  -webkit-animation-duration: 1s;
+  }
+  
+  @-webkit-keyframes slideInLeft {
+  0% {
+  -webkit-transform: translateX(0%);
+  }
+  100% {
+  -webkit-transform: translateX(1000%);
+  }
+  }
+ 
+  
+  .slideInLeft {
+  -webkit-animation-name: slideInLeft;
+  -webkit-animation-duration: 1s;
+  }
+
+  @-webkit-keyframes slideInRight {
+  0% {
+  -webkit-transform: translateX(100%);
+  }
+  100% {
+  -webkit-transform: translateX(0%);
+  }
+  }
+ 
+  
+  .slideInRight {
+  -webkit-animation-name: slideInRight;
+  -webkit-animation-duration: 1s;
+  }
+

@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="white" mode="ios">
+    <ion-title color = "primary" class="ion-float-center header" >Online Lessons  <ion-icon color = "primary" name="easel-outline"></ion-icon></ion-title>
+		<ion-button  class="headerButton"   fill="clear" size="default" routerLink="/dashboard" routerDirection="forward" right>
+</ion-button>
+	 <ion-buttons slot="start">
+	  <ion-back-button color="primary" class="ion-float-center header">
+		</ion-back-button>
+		
+		</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	
+	<ion-toolbar class="toolb">
+	<ion-grid class="toolb">
+	<ion-row class="toolb">
+	<ion-col size="8" class="toolb">
+	<ion-item  class="slideInRight toolb">
+        <ion-label>Subject</ion-label>
+		
+        <ion-select  [(ngModel)]="sub" (ionChange)="selectSubject($event)" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="All Subjects">
+          <ion-select-option value="All">All</ion-select-option>
+          <ion-select-option value="Mathematics">Mathematics</ion-select-option>
+          <ion-select-option value="Math Literacy">Math Literacy</ion-select-option>
+          <ion-select-option value="Life Science">Life Science</ion-select-option>
+          <ion-select-option value="Accounting">Accounting</ion-select-option>
+          <ion-select-option value="Economics">Economics</ion-select-option>
+          <ion-select-option value="Geography">Geography</ion-select-option>
+          </ion-select>
+		   </ion-item>
+	
+	  </ion-col>
+	  <ion-col size="4">
+		 <ion-item  class="slideInLeft toolb">
+			<ion-label>Grade</ion-label>
+		   <ion-select  [(ngModel)]="grd" (ionChange)="selectGrade($event)" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="All Grades">
+          <ion-select-option value="0">All</ion-select-option>
+          <ion-select-option value="12">12</ion-select-option>
+          <ion-select-option value="11">11</ion-select-option>
+          <ion-select-option value="10">10</ion-select-option>
+          <ion-select-option value="9">9</ion-select-option>
+ 
+          </ion-select>
+      </ion-item>
+		   </ion-col>
+		   </ion-row>
+		   </ion-grid>
+  </ion-toolbar>
+  
+			<ion-card   class = "card slideInUp"  *ngFor = "let item of currentLessons ">
+				<ion-card-header class="headerCard">
+					<ion-grid>
+					<ion-row baseline>
+					<ion-col size="4">
+					
+					<p>Subject: {{item.Subject}}</p>
+					</ion-col>
+					<ion-col size="4">
+					{{item.lessonName}}
+					</ion-col>
+					<ion-col size="4">
+					<p>Grade: {{item.Grade}}</p>
+					</ion-col>
+					</ion-row>
+					</ion-grid>
+					
+				</ion-card-header >
+
+				<ion-card-content>
+					<img src={{item.slides[0]}} (click)="viewLesson(item)">
+
+				</ion-card-content>
+					   
+
+			</ion-card>
+			
+	<ion-grid>
+		<ion-row >
+			<ion-col  *ngFor = "let item of cloudFiles " col-6>
+
+			<ion-card color = "white"  class = "over"  >
+				<ion-card-header style = "background-color: #fff;color: #000;">
+					<ion-row>
+					<ion-col col-8>
+					{{item.name}}
+					{{item.url}}
+					{{item.path}}
+					</ion-col>	
+					
+				
+				</ion-row>
+				</ion-card-header >
+
+				
+					   
+
+			</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>
