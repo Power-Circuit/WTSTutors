@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
 	{
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
 
@@ -44,7 +44,27 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'cloudlessons',
+    loadChildren: () => import('./pages/cloudlessons/cloudlessons.module').then( m => m.CloudlessonsPageModule)
+  },
+  {
+    path: 'uploadlesson',
+    loadChildren: () => import('./pages/uploadlesson/uploadlesson.module').then( m => m.UploadlessonPageModule)
+  },
+  {
+    path: 'playvid',
+    loadChildren: () => import('./pages/playvid/playvid.module').then( m => m.PlayvidPageModule)
+  },
+  {
+    path: 'viewlesson',
+    loadChildren: () => import('./pages/viewlesson/viewlesson.module').then( m => m.ViewlessonPageModule)
+  },
+
 ];
 
 @NgModule({

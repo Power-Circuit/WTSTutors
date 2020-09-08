@@ -1,0 +1,91 @@
+#lessonName{
+	font-family: 'Abril Fatface', cursive;
+	color: #fff;
+	size: 300%;
+	left: 0%;
+}
+
+.lessonButton{
+	font-family: Brush Script MT, cursive;
+	color: #000076;
+	size: 200%;
+	right: 5%;
+}
+
+.card{
+		
+		box-shadow: none;
+		background: rgba(0,0,0,0.3);
+		border-radius: 5px;
+	
+}
+
+a,p,
+ion-card-header.card-header {
+	color: #ff0!important;
+}
+
+.header{
+	font-family: 'Play', sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+	
+}
+
+.headerButton{
+	font-family: 'Play', sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	color: #000;
+	
+}
+
+.fab{
+	opacity: 0.5;
+}
+
+@keyframes flash {
+    0%   {color: white;}
+    18%  {color: white;}
+    34%  {color: white;}
+    51%  {color: black;}
+    68%  {color: black;}
+    86%  {color: white;}
+    100% {color: white;}
+	}
+
+	.my-icon{
+		animation-name: flash;
+		animation-duration: 5s;
+		animation-iteration-count: infinite;
+	}
+	
+	@-webkit-keyframes slideInUp {
+  0% {
+  -webkit-transform: translateY(100%);
+  }
+  100% {
+  -webkit-transform: translateY(0%);
+  }
+  }
+ 
+  
+  .slideInUp {
+  -webkit-animation-name: slideInUp;
+  -webkit-animation-duration: 1s;
+  }
+  
+  @-webkit-keyframes slideInLeft {
+  0% {
+  -webkit-transform: translateX(100%);
+  }
+  100% {
+  -webkit-transform: translateX(0%);
+  }
+  }
+ 
+  
+  .slideInLeft {
+  -webkit-animation-name: slideInLeft;
+  -webkit-animation-duration: 2s;
+  }

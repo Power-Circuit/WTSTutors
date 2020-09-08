@@ -54,7 +54,7 @@ export class TutorialPage {
       quality: 100,
 
    
-      outputType: 1
+      
     };
   
     this.imagePicker.getPictures(this.options).then((results) => {

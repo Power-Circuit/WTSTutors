@@ -1,9 +1,28 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>viewtutorial</ion-title>
+  <ion-toolbar color="white" mode="ios">
+    <ion-title color = "primary" class="ion-float-center header" >View Tutorial<ion-icon color = "primary" name="easel-outline"></ion-icon></ion-title>
+	
+	 <ion-buttons slot="start">
+	  <ion-back-button color="primary" class="ion-float-left header">
+		</ion-back-button>
+		
+		</ion-buttons>
+		
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
 
+		
+
+			<ion-card color = "white"  class = "card"  *ngFor = "let item of onlineLes.tutorials">
+				
+
+				<ion-card-content  style = "background-color: #fff">
+					<img src={{item}} >
+
+				</ion-card-content>
+					   
+
+			</ion-card>
+		
 </ion-content>

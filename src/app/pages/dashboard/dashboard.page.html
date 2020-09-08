@@ -1,42 +1,57 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>dashboard</ion-title>
-	<ion-button routerLink="/lessontype" routerDirection="forward" right>
-	New lesson
+  <ion-toolbar color="white" mode="ios">
+    <ion-title color = "primary" class="ion-float-center header" >Dashboard  <ion-icon color = "secondary" name="easel-outline"></ion-icon></ion-title>
+	 <ion-buttons  slot="end">
+	<ion-button  class="headerButton"  color="secondary"  fill="clear" size="default" routerLink="/cloudlessons" routerDirection="forward" right>
+	Online
 	</ion-button>
+	 </ion-buttons>
+	 <ion-buttons slot="start">
+	  <ion-back-button color="secondary" class="ion-float-center header">
+		</ion-back-button>
+		</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-<ion-button (click) = "playVideoHosted()" right>
-	Play video
-	</ion-button>
- <ion-grid>
-		<ion-row >
-			<ion-col  *ngFor = "let item of lessons" col-6>
+<ion-content style="backgound-color: #fff;">
 
-			<ion-card color = "white"  class = "over"  >
-				<ion-card-header style = "background-color: #fff;color: #000;">
-					<ion-row>
-					<ion-col col-10>
-					{{item.lessonName}}
-					</ion-col>	
-					<ion-col col-2>	
-				<ion-button color="light"  large clear (click)="deleteLesson(item)" ><ion-icon name="close"></ion-icon></ion-button>
-
-				</ion-col>
-				</ion-row>
+<ion-progress-bar [value] = "uploadProgress" color = "secondary">
+</ion-progress-bar>
+<ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
+<ion-refresher-content>
+    
+    </ion-refresher-content>
+  </ion-refresher>
+			<ion-card   class = "card slideInUp" *ngFor = "let item of lessons" >
+				<ion-card-header color="white">
+					
+					<h1 id ="lessonName" class="ion-float-left">{{item.lessonName}} ~  </h1>
+					<h1 id ="lessonName" class="ion-float-left">  {{item.Subject}} ~ </h1>
+					<h1 id ="lessonName" class="ion-float-left">  {{item.Grade}}  </h1>
+					
+				<ion-button class="ion-float-right" color="primary"  large  expand="block" shape="round" (click)="options(item)" ><ion-icon color = "secondary" name="options"></ion-icon></ion-button>
+			
 				</ion-card-header >
-				<img (click)="load(item)" routerLink="/chalkboard" routerDirection="forward" src={{item.slides[0]}} >
+				<img class=""(click)="load(item)" routerLink="/chalkboard" routerDirection="forward" src={{item.slides[0]}} >
 
-				<ion-card-content  style = "background-color: #fff">
+				<ion-card-content>
 					
 				</ion-card-content>
 					   
 
 			</ion-card>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+			
+	
+
+	
+	<ion-fab color = "secondary" right vertical="bottom" horizontal="end" slot="fixed" class="my-icon ">
+		<ion-fab-button routerLink="/lessontype" routerDirection="forward" ion-fab color="black"><ion-icon color="primary" name="create"></ion-icon>
+		</ion-fab-button>
+	
+		
+		
+	</ion-fab>
+	
+	
   
 </ion-content>
