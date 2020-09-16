@@ -64,6 +64,14 @@ const routes: Routes = [
     path: 'viewlesson',
     loadChildren: () => import('./pages/viewlesson/viewlesson.module').then( m => m.ViewlessonPageModule)
   },
+  {
+    path: 'profileselect',
+    loadChildren: () => import('./pages/profileselect/profileselect.module').then( m => m.ProfileselectPageModule)
+  },
+  {
+    path: 'editprofile',
+    loadChildren: () => import('./pages/editprofile/editprofile.module').then( m => m.EditprofilePageModule)
+  },
 
 ];
 

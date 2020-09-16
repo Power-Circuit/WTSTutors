@@ -1,15 +1,15 @@
 <ion-header>
   <ion-toolbar color="white" mode="ios">
-    <ion-title color = "primary" class="ion-float-center header" >View lesson<ion-icon color = "primary" name="easel-outline"></ion-icon></ion-title>
+    <ion-title class="ion-float-center header" >{{onlineLes.lessonName}} <ion-icon color = "secondary" name="easel-outline"></ion-icon></ion-title>
 	
 	 <ion-buttons slot="start">
 	  <ion-back-button color="primary" class="ion-float-left header">
 		</ion-back-button>
 		
 		</ion-buttons>
-		<ion-buttons slot="end">
-	  <ion-button routerLink="/viewtutorial" routerDirection="forward" color="primary" class="ion-float-right header">
-		Tutorial pages
+		<ion-buttons  slot="end">
+	  <ion-button  routerLink="/viewtutorial" routerDirection="forward"  class="ion-float-right header">
+		<p> </p>Tutorials
 		</ion-button>
 		
 		</ion-buttons>
@@ -17,12 +17,13 @@
 </ion-header>
 
 <ion-content>
-<div (click) = "playVideoHosted()" style="width: 100%; height: 30%;">
-<video [disabled]="true" controls poster="{{onlineLes.slides[0]}}" style="width: 100%; height: 100%;" >
-  <source src="{{videoles}}" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-</div>
+			<ion-toolbar style="color: #294a70;">
+				<h5 class="ion-float-center">Click play to watch video lesson</h5>
+			</ion-toolbar>
+			<div class="videoContainer" (click)="playVideoHosted()">
+				<img class ="play" src="{{onlineLes.slides[0]}}">
+			</div>
+
 
 			
 			<ion-card color = "white"  class = "card"  *ngFor = "let item of onlineLes.slides ">

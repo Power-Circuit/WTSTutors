@@ -1,0 +1,84 @@
+
+		.imge{
+			
+			border-radius: 50%;
+			border: 4px solid rgba(255,255,255,0.5);
+			margin-left: 20%;
+		}
+	
+	.profile-image{
+		height: 45% ;
+		width: 100%;
+		background-size: 100% 100%;
+		background-color: rgba(0,0,0,0.1);
+		z-index: 1;
+		position: relative;
+		img{
+			height: 68%;
+			width: 50%;
+			border-radius: 74%;
+			border: 4px solid rgba(0,0,0,0.5);
+			z-index: 2;
+			position: relative;
+			top: 20%;
+			left: 20%;
+			background: rgba(0,0,0,0.1);
+			
+			
+			
+		}
+		h3{
+			bottom: 0%;
+			right: 0%;
+			position: absolute;
+		}
+		h4{
+			bottom: 0%;
+			left: 0%;
+			position: absolute;
+		}
+		
+		
+
+		ion-icon{
+			
+			position: relative;
+			top: 50%;
+			left: 50%;
+			z-index: 999;
+		}
+	}
+	
+	
+	
+	.scroll-content{
+		align-content: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
+	
+	.background {
+		background-color: #1a2632;
+		background-size: 100% 100%;
+	}
+	
+	.item{
+		margin-bottom: 10px;
+		background: rgba(1,1,1,0.5);
+		border: medium none;
+		.text-input {
+			color: #fff;
+			position: initial !important;
+		}
+	}
+
+.elbutton{
+			width: 5%;
+			height: 5%;
+			position: relative;
+			top: 50%;
+			left: 50%;
+			z-index: 999;
+		}

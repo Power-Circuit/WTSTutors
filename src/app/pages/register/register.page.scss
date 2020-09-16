@@ -1,0 +1,17 @@
+ion-card.card {
+		
+		box-shadow: 40;
+		background-color: rgba(0,64,128,0.7);
+		border-radius: 5px;
+	
+}
+
+a,p,
+ion-card-header.card-header {
+	color: #f4a024!important;
+}
+
+.list > .item-block:first-child {
+		border: medium none;
+}
+

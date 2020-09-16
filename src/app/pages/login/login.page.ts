@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth'; 
 import { UserService } from '../../services/user.service';
+import { ToastController } from '@ionic/angular';
 
 import { Router } from '@angular/router';
 
@@ -11,9 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-	email;
-  password1;
-  constructor(public afAuth: AngularFireAuth,private usr: UserService,private router: Router) { }
+	email: "";
+  password1: "";
+  constructor(public afAuth: AngularFireAuth,public toastCtrl: ToastController,private usr: UserService,private router: Router) { }
 
   ngOnInit() {
   }
@@ -22,15 +23,34 @@ export class LoginPage implements OnInit {
     this.router.navigate(['/dashboard'])
   }
   
+  async presentToast(msg) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
+  }
+  
   
   async login(){
 	  
 	  try{
-		  const res = await this.afAuth.signInWithEmailAndPassword(this.email,this.password1)
-		 alert("Logged in Successfully!")
+		  const res = await this.afAuth.signInWithEmailAndPassword(this.email,this.password1);
+		  if(res.user){
+		  	  this.usr.setUser({
+			username: '',
+			uid: res.user.uid,
+			email: this.email,
+			propic: null,
+			bio: '',
+			grd: ''
+			
+		})
+		  }
+		 this.presentToast("Successfully logged in!");
 		 this.navigateLogin();
 	  }catch(err){
-		  alert("Could not log in: " + err);
+		  this.presentToast("Could not log in: " + err);
 		
 	  }
   }

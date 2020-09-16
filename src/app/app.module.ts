@@ -17,6 +17,8 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+
 
 //import { Firebase } from '@ionic-native/firebase/ngx';
 import{ AngularFireModule } from '@angular/fire';
@@ -67,7 +69,10 @@ var firebaseConfig = {
 	ImagehandlerService,
 	UserService,
 	VideoPlayer,
-	InAppBrowser
+	InAppBrowser,
+	Camera
+	
+
 	
 	
   ],

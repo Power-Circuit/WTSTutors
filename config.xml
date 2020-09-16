@@ -3,7 +3,7 @@
     <name>WTsTutors</name>
     <description>An awesome Ionic/Cordova app. for tutoring</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.42.162:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -112,6 +112,5 @@
     </plugin>
     <plugin name="cordova-plugin-inappbrowser" spec="4.0.0" />
     <allow-navigation href="http://146.231.5.229:8100" sessionid="fe1f6cd2" />
-    <allow-navigation href="http://192.168.42.162:8100" sessionid="671f8d7c" />
     <engine name="android" spec="7.1.4" />
 </widget>

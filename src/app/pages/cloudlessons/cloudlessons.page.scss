@@ -2,7 +2,7 @@
 	font-family: 'Play', sans-serif;
 	font-weight: bold;
 	font-size: 15px;
-	color: #294a70;
+	/*color: #294a70;*/
 	
 }
 
@@ -14,8 +14,10 @@
 .card{
 		
 		box-shadow: none;
-		background: rgba(0,0,0,0.3);
+		background: rgba(0, 64, 128,.8);
 		border-radius: 5px;
+		position: relative;
+		z-index: 999;
 	
 }
 
@@ -23,7 +25,7 @@ img{
 	width: 100%;
 }
 
-a,p,
+a,
 ion-card-header.card-header {
 	color: #f4a024!important;
 }
@@ -80,4 +82,16 @@ ion-card-header.card-header {
   -webkit-animation-name: slideInRight;
   -webkit-animation-duration: 1s;
   }
+  
+  .vertline{
+		border-left: 20px solid black;
+		position: absolute;
+		left: 50%;
+		margin-left: -3px;
+		bottom: 2%;
+		top: 2%;
+		z-index: 1;
+		background-color: #294a70;
+		
+	}
 

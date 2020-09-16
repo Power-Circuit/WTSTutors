@@ -47,4 +47,27 @@ export class ImagehandlerService {
 	  })
 	  return promise;
   }
+
+fetchImageBlob(){
+	  var promise = new Promise((resolve, reject) => {
+		  this.filechooser.open().then((url) => {
+			  (<any>window).FilePath.resolveNativePath(url, (result) => {
+				  this.nativepath = result;
+				  (<any>window).resolveLocalFileSystemURL(this.nativepath,(res) => {
+					  res.file((resFile) => {
+						  var reader = new FileReader();
+						  reader.readAsArrayBuffer(resFile);
+						  reader.onloadend = (evt: any) => {
+							  var imgBlob = new Blob([evt.target.result],{type: 'image/jpg'});
+								resolve(imgBlob);
+						  }
+					  })
+				  })
+			  })
+		  })
+	  })
+	  return promise;
+  }
+
+
 }

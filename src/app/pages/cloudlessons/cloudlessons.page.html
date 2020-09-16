@@ -4,14 +4,18 @@
 		<ion-button  class="headerButton"   fill="clear" size="default" routerLink="/dashboard" routerDirection="forward" right>
 </ion-button>
 	 <ion-buttons slot="start">
-	  <ion-back-button color="primary" class="ion-float-center header">
+	  <ion-back-button color="primary" class=" header">
 		</ion-back-button>
-		
-		</ion-buttons>
+			
+		</ion-buttons> 
+<ion-avatar (click)="navigateEdit()" class="ion-float-right">
+		<img src="{{proPic}}" alt="Unable to load Image." >
+	</ion-avatar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+	
 	
 	<ion-toolbar class="toolb">
 	<ion-grid class="toolb">
@@ -48,20 +52,21 @@
 		   </ion-row>
 		   </ion-grid>
   </ion-toolbar>
-  
-			<ion-card   class = "card slideInUp"  *ngFor = "let item of currentLessons ">
-				<ion-card-header class="headerCard">
-					<ion-grid>
-					<ion-row baseline>
-					<ion-col size="4">
+		
+			<ion-card style="z-index: 2;position:relative;background-color: rgba(0,0,0,0);"    >
+			<ion-card   class = "card slideInUp" *ngFor = "let item of currentLessons ">
+				<ion-card-header class="headerCard" style="border-radius: 100px;">
+					<ion-grid style="border-radius: 100px;">
+					<ion-row style="border-radius: 200px;" baseline>
+					<ion-col size="4" style="background-color: rgba(255,255,255,0);color: #fff;">
 					
-					<p>Subject: {{item.Subject}}</p>
+					<p >Subject: {{item.Subject}}</p>
 					</ion-col>
-					<ion-col size="4">
-					{{item.lessonName}}
+					<ion-col size="4" style="font-size: 20px;text-align: center;background-color: rgba(0,0,0,1);color: #fff;">
+					<p>{{item.lessonName}}</p>
 					</ion-col>
-					<ion-col size="4">
-					<p>Grade: {{item.Grade}}</p>
+					<ion-col size="4" style="text-align: center;background-color: rgba(255,255,255,0);color: #fff;">
+					<p >Grade: {{item.Grade}}</p>
 					</ion-col>
 					</ion-row>
 					</ion-grid>
@@ -72,32 +77,10 @@
 					<img src={{item.slides[0]}} (click)="viewLesson(item)">
 
 				</ion-card-content>
-					   
-
+				</ion-card>   
+				<div class="vertline">
+				</div>
 			</ion-card>
 			
-	<ion-grid>
-		<ion-row >
-			<ion-col  *ngFor = "let item of cloudFiles " col-6>
-
-			<ion-card color = "white"  class = "over"  >
-				<ion-card-header style = "background-color: #fff;color: #000;">
-					<ion-row>
-					<ion-col col-8>
-					{{item.name}}
-					{{item.url}}
-					{{item.path}}
-					</ion-col>	
-					
-				
-				</ion-row>
-				</ion-card-header >
-
-				
-					   
-
-			</ion-card>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+	
 </ion-content>

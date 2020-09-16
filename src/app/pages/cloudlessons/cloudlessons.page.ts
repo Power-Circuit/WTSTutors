@@ -4,6 +4,7 @@ import * as firebase from 'firebase/app';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { LessonService } from '../../services/lesson.service';
+import { UserService } from '../../services/user.service';
 import { firestore } from 'firebase/app';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore';
 import { map, take } from 'rxjs/operators';
@@ -30,9 +31,11 @@ export class CloudlessonsPage {
 		currentLessons = [];
 		sub = 'All';
 		grd = '0';
+		proPic: any = 'https://firebasestorage.googleapis.com/v0/b/wtstutors.appspot.com/o/noProfile.png?alt=media&token=912141e1-15f8-4bf8-a0d9-4d442305a3f1';
+
 //lesCollectionRef: AngularFirestoreCollection<Lesson>;
 
-  constructor(private iab: InAppBrowser,public zone: NgZone,public router: Router,public afstore: AngularFirestore,public ls: LessonService,private videoPlayer: VideoPlayer) { }
+  constructor(private iab: InAppBrowser,public usr: UserService,public zone: NgZone,public router: Router,public afstore: AngularFirestore,public ls: LessonService,private videoPlayer: VideoPlayer) { }
 
   
   
@@ -43,10 +46,39 @@ export class CloudlessonsPage {
 	  this.getLesson();
 	  this.loadFiles();
 	  this.loadLessons();
+		this.loadProPic();
+		this.getProfile();
+		        
   }
   
   loadLessons(){
 	  this.currentLessons = this.lessons;
+  }
+  
+  navigateEdit(){
+    this.router.navigate(['/editprofile']);
+  }
+	
+  
+   loadProPic(){
+	  const uid = this.usr.getUid() + "_pic";
+	  
+	  const storageRef = firebase.storage().ref('ProfilePics');
+	 storageRef.listAll().then(result => {
+		  result.items.forEach(async ref => {
+					if(ref.name == uid){
+						this.proPic = await ref.getDownloadURL();
+						this.usr.editUrl = this.proPic;
+					}
+			  })
+		  			 
+	  }).catch((err) => {
+				alert("error: " + err);
+		});
+   }
+  
+  navigateDash(){
+    this.router.navigate(['/login']);
   }
   
   getLesson(){
@@ -55,6 +87,21 @@ export class CloudlessonsPage {
    const less = lesCollectionRef.valueChanges().subscribe(res => {
 	   res.forEach(item => {
 		   this.lessons.push(item);
+	   })
+   });
+   //this.lessons = 
+  
+  }
+  
+  getProfile(){
+	  const uid = this.usr.getUid() + "";
+	   const lesCollectionRef = this.afstore.collection('userprofiles'); 
+		
+   const less = lesCollectionRef.valueChanges().subscribe(res => {
+	   res.forEach(item => {
+		   if(item.uid == uid){
+			   this.usr.user = item;
+		   }
 	   })
    });
    //this.lessons = 

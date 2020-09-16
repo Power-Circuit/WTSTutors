@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="white" mode="ios">
+    <ion-title color = "primary" class="ion-float-center header" >Choose your Profile   <ion-icon color = "secondary" name="easel-outline"></ion-icon></ion-title>
+	 <ion-buttons  slot="end">
+	<ion-button  class="headerButton"  color="secondary"  fill="clear" size="default" routerLink="/cloudlessons" routerDirection="forward" right>
+	Skip
+	</ion-button>
+	
+	 </ion-buttons>
+		
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-card class="profile-image">
+		<img (click) = "getImages()" src="{{imgurl}}" alt="Unable to load Image." >
+	</ion-card>
+	
+	<ion-card>
+	 <ion-item>
+				<ion-input color = "primary" type="text" placeholder="User name" [(ngModel)] = "usrName"></ion-input>
+     </ion-item>
+	
+	<ion-item  class="slideInLeft toolb">
+			<ion-label>Grade</ion-label>
+		   <ion-select  [(ngModel)]="grd"  [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="All Grades">
+          <ion-select-option value="12">12</ion-select-option>
+          <ion-select-option value="11">11</ion-select-option>
+          <ion-select-option value="10">10</ion-select-option>
+          <ion-select-option value="9">9</ion-select-option>
+          <ion-select-option value="8">8</ion-select-option>
+          <ion-select-option value="7">7</ion-select-option>
+          <ion-select-option value="6">6</ion-select-option>
+          <ion-select-option value="5">5</ion-select-option>
+          <ion-select-option value="4">4</ion-select-option>
+          <ion-select-option value="3">3</ion-select-option>
+ 
+          </ion-select>
+      </ion-item>
+       <ion-item>
+				<ion-input color = "primary" type="text" placeholder="self description" [(ngModel)] = "descri"></ion-input>
+       </ion-item>
+	<div>
+		<ion-button outline color = "primary" (click) = "proceed()">Proceed</ion-button>
+	</div>
+	</ion-card>
+</ion-content>

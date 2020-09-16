@@ -10,7 +10,7 @@
 			Login
 		</ion-card-header>
 		<ion-card-content>
-			<ion-list no-lines>
+			<ion-list style="background-color: rgba(0,0,0,0);" no-lines>
 			<div class ="spacer" style="height: 10px;"></div>
 			<ion-item>
 				<ion-input type="email" placeholder="Email" [(ngModel)] = "email"></ion-input>
@@ -23,12 +23,9 @@
 			<ion-item>
 				<ion-input type="password" placeholder="confirm password" [(ngModel)] = "password2"></ion-input>
 			</ion-item>
-			<div class ="spacer" style="height: 10px;"></div>
-			<a >Forgot your login details?</a>
+			
 			<div class ="spacer" style="height: 10px;"></div>
 			<ion-button block outline round color="light" (click)="register()">Register</ion-button>
-			<div class ="spacer" style="height: 10px;"></div>
-			<ion-button block full clear  >Dont have an account? Sign up!</ion-button>
 			
 			</ion-list>
 		</ion-card-content>
