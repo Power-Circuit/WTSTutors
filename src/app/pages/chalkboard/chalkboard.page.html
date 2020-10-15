@@ -4,9 +4,11 @@
       WTS tutors:= {{les.lessonName}}
 	
     </ion-title>
+	<ion-buttons slot = "end">
 	  <ion-button class ="ion-float-right" routerLink="/dashboard" routerDirection="forward" right>
 	Home
 	</ion-button>
+	</ion-buttons>
 	
   </ion-toolbar>
 </ion-header>
@@ -18,17 +20,15 @@
 	<canvas #imageCanvas (touchstart)="handleStart($event)" (mousedown) = "handleStart($event)" (touchmove)="handleMove($event)" (mousemove) = "handleMove($event)" (touchend) = "handleEnd($event)" (mouseup) = "handleEnd($event)" ></canvas>
 	</div>
 	<ion-toolbar id="top-toolbar" ion-fixed>
-	<ion-button routerLink="/tutorial" routerDirection="forward" right>
-	Tutorials
-	</ion-button>
 	<ion-button routerLink="/slides" routerDirection="forward" right>
 	Slides
 	</ion-button>
-	<ion-button  (click) = "saveCanvasImage()" right>
-	save
+	
+	<ion-button color="success" (click) = "saveCanvasImage()" right>
+	save <ion-icon name="checkmark-done-outline"></ion-icon>
 	</ion-button>
 	
-	<ion-button  (click) = "doundo()" right>
+	<ion-button color="danger"  (click) = "doundo()" right>
 	Undo
 	</ion-button>
 	<ion-row>

@@ -47,6 +47,27 @@ export class ImagehandlerService {
 	  })
 	  return promise;
   }
+  
+  fetchPdfBlob(){
+	  var promise = new Promise((resolve, reject) => {
+		  this.filechooser.open().then((url) => {
+			  (<any>window).FilePath.resolveNativePath(url, (result) => {
+				  this.nativepath = result;
+				  (<any>window).resolveLocalFileSystemURL(this.nativepath,(res) => {
+					  res.file((resFile) => {
+						  var reader = new FileReader();
+						  reader.readAsArrayBuffer(resFile);
+						  reader.onloadend = (evt: any) => {
+							  var pdfBlob = new Blob([evt.target.result],{type: 'application/pdf'});
+								resolve(pdfBlob);
+						  }
+					  })
+				  })
+			  })
+		  })
+	  })
+	  return promise;
+  }
 
 fetchImageBlob(){
 	  var promise = new Promise((resolve, reject) => {

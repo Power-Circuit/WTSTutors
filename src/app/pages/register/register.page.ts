@@ -1,28 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UserService } from '../../services/user.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ToastController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
-
-
- 
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class RegisterPage {
   email;
   password1;
   password2;
   
-  constructor(public afAuth: AngularFireAuth,private toastCtrl: ToastController,public afstore: AngularFirestore,private router: Router,public usr: UserService) { }
+  constructor(public afAuth: AngularFireAuth,private toastCtrl: ToastController,public loadingController: LoadingController,public afstore: AngularFirestore,private router: Router,public usr: UserService) { }
 
-  ngOnInit() {
-  }
   
   navigateOnline(){
     this.router.navigate(['/cloudlessons']);
@@ -34,11 +30,21 @@ export class RegisterPage implements OnInit {
   
   
   async register(){
+	  const loading = await this.loadingController.create({
+      cssClass: 'register',
+      message: 'Registering user...',
+      
+    });
 	  if(this.password1 != this.password2){
 		  return this.presentToast("Passwords don't match!");
 	  }
 	  
 	  try{
+		  
+		  
+    await loading.present();
+
+    
 		const res = await this.afAuth.createUserWithEmailAndPassword(this.email,this.password1)	
 		this.afstore.doc('users/' + res.user.uid).set({
 			username: this.email
@@ -48,14 +54,23 @@ export class RegisterPage implements OnInit {
 			username: '',
 			uid: res.user.uid,
 			email: this.email,
-			propic: null,
+			propic: '',
 			bio: '',
-			grd: ''
+			grd: '',
+			type: 'trial',
+			xpDate: moment().format("YYYYMMDD HH:mm:ss"),
+			refNum: ''
 			
-		})
+		});
+		loading.dismiss();
+		this.usr.fireUser = res.user;
 		this.presentToast("Successfully registered");
+		//let user = firebase.auth().currentUser;user.emailVerified()
+	res.user.sendEmailVerification();
+	this.presentToast("Sent email verification");
 		this.navigateProfile();
 	 }	catch(error){
+		 loading.dismiss();
 			this.presentToast("There was an error trying to add user, please check your connection.");
 	  }		  
   }

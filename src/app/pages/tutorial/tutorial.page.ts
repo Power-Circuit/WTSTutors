@@ -5,8 +5,10 @@ import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { LessonService } from '../../services/lesson.service';
+import { ImagehandlerService } from '../../services/imagehandler.service';
 import { Storage } from '@ionic/storage';
-
+import { ToastController, LoadingController,AlertController } from '@ionic/angular';
+import { DocumentViewer,DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
 
 @Component({
   selector: 'app-tutorial',
@@ -16,22 +18,46 @@ import { Storage } from '@ionic/storage';
 export class TutorialPage {
 	options: any;
 	tutorialPics = []; //array of tutorials pics
+	tutorialBlobs = []; //array of tutorials pics blob objects
 	nativepath: any;
 	lessons = [];
-   constructor(private imagePicker: ImagePicker,private storage: Storage,public ls: LessonService ,public filechooser: FileChooser, public zone: NgZone) {}
+	imgBlob: any = null;
+	imgurl:any = "";
+	isSet = false;
+   constructor(private imagePicker: ImagePicker,private document: DocumentViewer,public toastCtrl: ToastController,public imgServ: ImagehandlerService,private storage: Storage,public ls: LessonService ,public filechooser: FileChooser, public zone: NgZone) {}
 
-	ionViewDidEnter() {
-	  this.storage.get("tutorial " + this.ls.lessonIndex).then((val) => {
+	ionViewWillEnter() {
+	  this.storage.get("tutorial " + this.ls.les.lessonName + this.ls.les.Subject + this.ls.les.Grade).then((val) => {
 			//console.log('Your ideaname is', val.ideaname);
 			if(val == null){
 				
-				
+				this.tutorialBlobs = [];
+				this.tutorialPics = [];
+				//this.study();
 				
 			}				
 			else{
 				
 				
-				this.tutorialPics = val;
+				this.tutorialBlobs = [];
+				this.tutorialPics = [];
+				this.tutorialBlobs = val;
+				this.zone.run(() => {
+
+						var reader = new FileReader();
+						const imgBlob: any = this.tutorialBlobs[0];
+						reader.readAsDataURL(imgBlob);
+						reader.onloadend = () => {
+							const pdfurl = reader.result;
+							this.tutorialPics.push(pdfurl);
+							//this.study();
+						}
+						err => { 
+						alert("error trying to read blob...");
+						}
+			})
+				
+				
 			}
 			
 		});
@@ -41,29 +67,88 @@ export class TutorialPage {
 
 	  
 	  
-	  this.storage.set("tutorial " + this.ls.lessonIndex, this.tutorialPics);
-	  alert("saved tutorial pics!");
+	  this.storage.set("tutorial " + this.ls.les.lessonName + this.ls.les.Subject + this.ls.les.Grade, this.tutorialBlobs);
+	  this.presentToast("saved tutorial pics!");
+  }
+  
+  openPdf(url){
+		  const options: DocumentViewerOptions = {
+	  title: 'My PDF'
+	}
+
+this.document.viewDocument(url, 'application/pdf', options)
+  }
+  
+   openpdf(url){
+  
+  window.open(url);
+  
+  }
+  
+  savee(){
+	  const options: DocumentViewerOptions = {
+  title: 'random pdf'
+}
+
+this.document.viewDocument('../../../assets/myFile.pdf', 'application/pdf', options);
+  }
+  
+  getPdf(){
+	  this.imgServ.fetchPdfBlob().then((res) => {
+		  this.tutorialBlobs.push(res);
+		  var reader = new FileReader();
+			const tutBlob: any = res;
+			this.zone.run(() => {
+			reader.readAsDataURL(tutBlob);
+			reader.onloadend = () => {
+				const pdfurl = reader.result;
+				this.tutorialPics[0] = pdfurl;
+			}
+			err => { 
+			// display error
+			alert("error trying to read blob...");
+			}
+			
+			})
+	  })
+	  
+  }
+  
+  ionViewWillLeave(){
+	  this.tutorialBlobs = [];
+	  this.tutorialPics = [];
+	  
   }
 
-  getImages() {
-    this.options = {
   
-      
-      width: 300,
-   
-      quality: 100,
-
-   
-      
-    };
   
-    this.imagePicker.getPictures(this.options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-        this.tutorialPics.push('data:image/jpeg;base64,' + results[i]);
-      }
-    }, (err) => {
-      alert(err);
+  getImages(){
+		this.imgServ.fetchImageBlob().then((res) => {
+			this.zone.run(() => {
+				var reader = new FileReader();
+				var imgBlob2: any = res;
+				 this.tutorialBlobs.push(imgBlob2);
+          reader.readAsDataURL(imgBlob2);
+          reader.onloadend = () => {
+            var imgurl2:any = reader.result;
+			this.tutorialPics.push(imgurl2);
+          }
+        err => {
+            // display error
+			alert("error trying to read blob...");
+        }
+				//this.imgurl = res;
+				//this.imgurl = this.imgServ.nativepath;
+			})
+		})
+	}
+	
+	async presentToast(msg) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000
     });
+    toast.present();
   }
   
 

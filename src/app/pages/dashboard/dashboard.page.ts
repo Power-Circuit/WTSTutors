@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { LessonService } from '../../services/lesson.service';
 import { ImagehandlerService } from '../../services/imagehandler.service';
-import { CloudlessonsService } from '../../services/cloudlessons.service';
 import { Storage } from '@ionic/storage';
-import { AlertController } from '@ionic/angular';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { File,FileEntry } from '@ionic-native/file/ngx';
 import { firestore } from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
-//import { Observable } from 'rxjs/Observable';
+import { UserService } from '../../services/user.service';
+import { ToastController, LoadingController,AlertController } from '@ionic/angular';
 
 interface Lesson {
   name: string,  
@@ -26,7 +25,7 @@ export class DashboardPage {
 	lessons = [];
 //lesCollectionRef: AngularFirestoreCollection<Lesson>;
 
-	//lessons;
+	hasRequests = false;
 	empty = true;
 	noLessons = 0;
 	tutorials = [];
@@ -40,9 +39,10 @@ export class DashboardPage {
 			tutorials : [],
 			slides: []
 		}
-  constructor(private storageLocal: Storage,public afstore: AngularFirestore,public cl: CloudlessonsService,public file: File,public storage: AngularFireStorage,public img: ImagehandlerService,private videoPlayer: VideoPlayer,public alertController: AlertController ,public ls: LessonService) { }
+  constructor(private storageLocal: Storage,public loadingController: LoadingController,public toastCtrl: ToastController,public usr: UserService,public afstore: AngularFirestore,public file: File,public storage: AngularFireStorage,public img: ImagehandlerService,private videoPlayer: VideoPlayer,public alertController: AlertController ,public ls: LessonService) { }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
+	  this.getRequests();
 	  this.storageLocal.get('myLessons').then((val) => {
 			//console.log('Your ideaname is', val.ideaname);
 			if(val == null){
@@ -66,6 +66,8 @@ export class DashboardPage {
 		});
   }
   
+  
+  
   load(item){
 	  	  this.ls.update(item);
 
@@ -75,8 +77,8 @@ export class DashboardPage {
   createPost(item){
 	  this.les = item;
      this.afstore.collection('lessons').add(this.les).then(() => {
-		 this.uploadFile(this.les);
-			alert("uploaded lesson succesfully");
+		 this.presentAlertVid(this.les);
+			
 		})
 }
   
@@ -124,6 +126,57 @@ export class DashboardPage {
     await alert.present();
   }
   
+  
+	  async presentAlertPdf(item) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Lesson Upload!',
+      message: 'Select a pdf document as course material for this lesson',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Select PDF',
+          handler: () => {
+			 this.uploadpdf(item);
+          }
+        }
+      ]
+    });
+	
+    await alert.present();
+  }
+
+  async presentAlertVid(item) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Lesson Upload!',
+      message: 'Select a Video lesson for this lesson',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+          }
+        }, {
+          text: 'Select Video',
+          handler: () => {
+			 this.uploadFile(item);
+          }
+        }
+      ]
+    });
+	
+    await alert.present();
+  }
+  
+  
    async presentDelete() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -140,7 +193,6 @@ export class DashboardPage {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Alert',
-      subHeader: 'Delete',
       message: msg,
       buttons: ['OK']
     });
@@ -152,23 +204,92 @@ export class DashboardPage {
        
         this.img.uploadimage().then((uploadedurl: any) =>{
           this.vidURL = uploadedurl;
-		  alert("found video: " + uploadedurl);
+		 // alert("found video: " + uploadedurl);
         })
     }
   
   playVideoHosted() {
     this.videoPlayer.play(this.vidURL).then(() => {
-      this.presentAlert('video completed');
+      this.presentToast('video completed');
     }).catch(err => {
-     this.presentAlert(err);
+     this.presentToast(err);
     });
   }
   
   
-  async uploadFile(item) {
+  
+   getRequests(){
+	   this.hasRequests = false;
+	  	   const lesCollectionRef = this.afstore.collection('userprofiles'); 
+			var comments = [];
+				   const less = lesCollectionRef.valueChanges().subscribe(res => {
+					   res.forEach(item => {
+						   const user:any = item;
+						   if(user.type == "request"){
+							   comments.push(user);
+						   }
+					   })
+					   if(comments.length != 0){
+						   this.hasRequests = true;
+					   }
+					   else{
+					   }
+				   });
+	  
+  }
+  
+  
+  async uploadpdf(item) {
+	  	  const loading = await this.loadingController.create({
+      cssClass: 'Uploading PDF...',
+      message: 'Uploading pdf...',
+      
+    });
+	
     const path = this.vidURL;
   
    var fileBlob ;
+   
+   this.img.fetchPdfBlob().then((post) => {
+	   fileBlob = post;
+   }).then(() => {
+	const name = item.lessonName;
+	const sub = item.Subject;
+	const grd = item.Grade;
+   // const randomId = Math.random()
+		//  .toString(36)
+		//  .substring(2, 8);
+		  loading.present();
+		const uploadTask = this.storage.upload(
+		   `pdfs/${name}_${sub}_${grd}`,
+		  fileBlob
+		);
+		uploadTask.percentageChanges().subscribe(change => {
+		  this.uploadProgress = change;
+		});
+		uploadTask.then(async res => {
+			loading.dismiss();
+			this.presentAlert("Upload Success!");
+		
+		}).catch((err) => {
+			loading.dismiss();
+			this.presentToast("error: " + err.code);
+		});
+   })
+  }
+  
+  
+  async uploadFile(item) {
+	  	  const loading = await this.loadingController.create({
+      cssClass: 'profileselect',
+      message: 'Uploading Video...',
+      
+    });
+	
+    const path = this.vidURL;
+  
+   var fileBlob ;
+   
    this.img.uploadpost().then((post) => {
 	   fileBlob = post;
    }).then(() => {
@@ -178,6 +299,7 @@ export class DashboardPage {
     const randomId = Math.random()
 		  .toString(36)
 		  .substring(2, 8);
+		  loading.present();
 		const uploadTask = this.storage.upload(
 		   `files/${name}_${sub}_${grd}`,
 		  fileBlob
@@ -186,12 +308,23 @@ export class DashboardPage {
 		  this.uploadProgress = change;
 		});
 		uploadTask.then(async res => {
-			alert("upload success");
+			loading.dismiss();
+			this.presentAlertPdf(item);
+			
 		
 		}).catch((err) => {
-			alert("error: " + err.code);
+			loading.dismiss();
+			this.presentToast("error: " + err.code);
 		});
    })
+  }
+  
+   async presentToast(msg) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 5000
+    });
+    toast.present();
   }
   
    getMimeType(fileExt) {

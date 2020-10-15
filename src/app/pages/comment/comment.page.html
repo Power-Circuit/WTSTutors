@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="white" mode="ios">
+    <ion-title color = "primary" class="ion-float-center header" >{{numComm}} Comments <ion-icon color = "primary" name="chatbox-ellipses-outline"></ion-icon></ion-title>
+		<ion-button  class="headerButton"   fill="clear" size="default" routerLink="/dashboard" routerDirection="forward" right>
+</ion-button>
+	 <ion-buttons slot="start">
+	  <ion-back-button color="primary" class=" header">
+		</ion-back-button>
+			
+		</ion-buttons> 
+		
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  #content class = "background" overflow-scroll="true" padding>
+	<div class="chatwindow">
+	
+	<ion-list lines="none" style="height: 85%;width: 100%;background-color: rgba(255,255,255,0);" >
+	<!-- let item of allmessages; let i = index goes in ngFor -->
+	<ion-item *ngFor = "let item of comments; let i = index"  color="white" text-wrap >
+	<ion-avatar class= "myAvatar" slot="start" *ngIf="item.senderID === user.uid">
+		<img src="{{item.senderProPic}}" alt="no pic">
+	</ion-avatar>
+	<div item-left class="ion-float-left mybubble" *ngIf = "item.senderID === user.uid" text-wrap>
+		<h6 style="color: #f4a024">{{item.senderUserName}}</h6>
+		<h5>{{item.senderMessage}}</h5>
+		<p style ="font-size: 11px;float: right;">{{item.time}}</p>
+
+
+	</div>
+	
+	<div  slot="end" class="thembubble" *ngIf = "item.senderID != user.uid" text-wrap>
+		<h6 class ="ion-float-center" style="color: #294a70;">{{item.senderUserName}}</h6>
+		<h5>{{item.senderMessage}}</h5>
+		<p style ="font-size: 10px; float: right">{{item.time}}</p>
+
+	</div>
+	<ion-avatar class= "themAvatar"	slot="end" *ngIf="item.senderID != user.uid">
+		<img src="{{item.senderProPic}}">
+	</ion-avatar>
+	
+	
+	
+	</ion-item >
+	</ion-list>
+	
+	</div>
+	</ion-content>
+	<ion-footer  slot="fixed" class="foots">
+		
+		<ion-toolbar style ="background-color: rgba(255,255,255,0.1);" text-wrap>
+			<ion-row>
+			<ion-textarea style ="background-color: rgba(255,255,255,0.1);"[(ngModel)] = "comment" color="primary" placeholder="Comment...">
+			</ion-textarea>
+			<ion-buttons end>
+				<ion-button (click)="goComment()" color="primary" >
+				<ion-icon name="send">
+				</ion-icon>
+				</ion-button>
+				
+			</ion-buttons>
+			</ion-row>
+		</ion-toolbar>
+	</ion-footer>
+

@@ -3,6 +3,8 @@ import { LessonService } from '../../services/lesson.service';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
+import { ToastController, LoadingController,AlertController } from '@ionic/angular';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -20,11 +22,14 @@ export class ViewlessonPage {
 			slides: []
 		}
 		videoles = '';
-		
-  constructor(public ls: LessonService,public router: Router,private videoPlayer: VideoPlayer) { }
+		isPrem = false;
+  constructor(public ls: LessonService,public toastCtrl: ToastController,public usr: UserService,public alertController: AlertController,public router: Router,private videoPlayer: VideoPlayer) { }
 
   ionViewWillEnter() {
 	  this.onlineLes = this.ls.onlineLes;
+	  if(this.usr.isPrem){
+		  this.isPrem = true;
+	  }
 	  this.loadFiles();
   }
   
@@ -39,7 +44,6 @@ export class ViewlessonPage {
 	  storageRef.listAll().then(result => {
 		  result.items.forEach(async ref => {
 			  if(this.onlineLes.lessonName + "_" + this.onlineLes.Subject + "_" + this.onlineLes.Grade == ref.name){
-				  alert("has video");
 					this.videoles = await ref.getDownloadURL();
 			  }
 		  });			 
@@ -47,13 +51,52 @@ export class ViewlessonPage {
   }
   
   playVideoHosted() {
-    this.videoPlayer.play(this.videoles).then(() => {
-      alert('video completed');
-    }).catch(err => {
-     alert(err);
-    });
+	  if(this.isPrem){
+			this.videoPlayer.play(this.videoles).then(() => {
+			}).catch(err => {
+			 this.presentToast(err);
+			});
+	  }
+	  else{
+		  this.getPrem();
+	  }
    }
+   
+   async getPrem() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Premium Access only',
+      message: 'You must be a premium watch video lessons, would you like to get premium access?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            this.navigatePrem();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
   
+  navigatePrem(){
+    this.router.navigate(['/requestpremium']);
+  }
+  
+  async presentToast(msg) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 5000
+    });
+    toast.present();
+  }
   
 
 }

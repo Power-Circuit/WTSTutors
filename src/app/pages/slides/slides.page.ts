@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LessonService } from '../../services/lesson.service';
 import { Storage } from '@ionic/storage';
 
@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: './slides.page.html',
   styleUrls: ['./slides.page.scss'],
 })
-export class SlidesPage implements OnInit {
+export class SlidesPage  {
 	les = {
 			lessonName: '',
 			Grade: '',
@@ -21,7 +21,7 @@ export class SlidesPage implements OnInit {
 	slides = [];
   constructor(private storage: Storage, public ls: LessonService) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
 	  	  this.storage.get('myLessons').then((val) => {
 
 			if(val == null){
@@ -30,6 +30,7 @@ export class SlidesPage implements OnInit {
 			}				
 			else{
 				this.lessons = val;
+				this.slides = [];
 				this.slides = this.lessons[this.ls.lessonIndex].slides;
 				
 			}

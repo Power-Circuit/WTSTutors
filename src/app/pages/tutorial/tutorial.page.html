@@ -1,13 +1,17 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>tutorial</ion-title>
-	
+	<ion-buttons slot="start">
+	  <ion-back-button color="primary" class="ion-float-left header">
+		</ion-back-button>
+		
+		</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-button (click) ="getImages()">
-		Upload tutorial picture
+	<ion-button (click) ="getPdf()">
+		Course material
 	</ion-button>
 	<ion-button (click) ="save()">
 		Save
@@ -17,11 +21,11 @@
 		<ion-row *ngFor = "let item of tutorialPics">
 			<ion-col   col-12>
 
-			<ion-card color = "white"  class = "over" >
+			<ion-card color = "white"  class = "over" (click) = "openpdf(item)">
 				<ion-card-header style = "background-color: #fff">
 
 				</ion-card-header >
-				<img src={{item}} >
+				<h1>Open PDF</h1>
 
 				<ion-card-content  style = "background-color: #fff">
 					

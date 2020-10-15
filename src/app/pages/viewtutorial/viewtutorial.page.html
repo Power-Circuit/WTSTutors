@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="white" mode="ios">
-    <ion-title color = "primary" class="ion-float-center header" >View Tutorial<ion-icon color = "primary" name="easel-outline"></ion-icon></ion-title>
+    <ion-title color = "primary" class="ion-float-center header" >Course Material<ion-icon color = "primary" name="easel-outline"></ion-icon></ion-title>
 	
 	 <ion-buttons slot="start">
 	  <ion-back-button color="primary" class="ion-float-left header">
@@ -14,12 +14,14 @@
 
 		
 
-			<ion-card color = "white"  class = "card"  *ngFor = "let item of onlineLes.tutorials">
+			<ion-card color = "white"  class = "card"  *ngFor = "let item of cloudFiles">
 				
 
-				<ion-card-content  style = "background-color: #fff">
-					<img src={{item}} >
-
+				<ion-card-content   color = "white">
+				<ion-item (click) = "openPdf(item)" color = "secondary">
+			<h3>View Course material</h3>
+			<ion-icon slot = "end" name="archive"></ion-icon>
+			</ion-item>
 				</ion-card-content>
 					   
 

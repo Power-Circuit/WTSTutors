@@ -18,13 +18,18 @@ import { IonicStorageModule } from '@ionic/storage';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 
 //import { Firebase } from '@ionic-native/firebase/ngx';
 import{ AngularFireModule } from '@angular/fire';
 import{ AngularFireAuthModule } from '@angular/fire/auth';
 import{ AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+
+//others
+import { DatePipe } from '@angular/common'
+
 
 
 
@@ -70,7 +75,10 @@ var firebaseConfig = {
 	UserService,
 	VideoPlayer,
 	InAppBrowser,
-	Camera
+	Camera,
+	DatePipe,
+	BackgroundMode,
+	DocumentViewer
 	
 
 	

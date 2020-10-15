@@ -1,12 +1,8 @@
 <ion-header>
   <ion-toolbar color="white" mode="ios">
-    <ion-title color = "primary" class="ion-float-center header" >Choose your Profile   <ion-icon color = "secondary" name="easel-outline"></ion-icon></ion-title>
-	 <ion-buttons  slot="end">
-	<ion-button  class="headerButton"  color="secondary"  fill="clear" size="default" routerLink="/cloudlessons" routerDirection="forward" right>
-	Skip
-	</ion-button>
+    <ion-title color = "primary" class="ion-float-center header" >Choose your Profile   <ion-icon color = "secondary" name="person-circle-outline"></ion-icon></ion-title>
+	 
 	
-	 </ion-buttons>
 		
 
   </ion-toolbar>
@@ -24,7 +20,7 @@
 	
 	<ion-item  class="slideInLeft toolb">
 			<ion-label>Grade</ion-label>
-		   <ion-select  [(ngModel)]="grd"  [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="All Grades">
+		   <ion-select  [(ngModel)]="grd"  [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Choose a grade">
           <ion-select-option value="12">12</ion-select-option>
           <ion-select-option value="11">11</ion-select-option>
           <ion-select-option value="10">10</ion-select-option>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="white" mode="ios">
+    <ion-title color = "primary" class="ion-float-center header" >Menu <ion-icon color = "secondary" name="layers-outline"></ion-icon></ion-title>
+		
+	
+		
+<ion-avatar (click)="navigateEdit()" class="ion-float-right">
+		<img src="{{proPic}}" alt="Unable to load Image." >
+	</ion-avatar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+		<ion-card class = "card">
+		
+		<ion-card-content class="ion-justify-content-center">
+			<ion-list style="background-color: rgba(0,0,0,0);" no-lines>
+			
+			<ion-item (click) = "privacy()" style="background-color: rgba(0,0,0,0);">
+			<h3>Privacy Policy</h3>
+			<ion-icon slot = "end" name="lock-closed-outline"></ion-icon>
+			</ion-item>
+			<ion-item (click) = "study()" style="background-color: rgba(0,0,0,0);">
+			<h3>WTS Study guide</h3>
+			<ion-icon slot = "end" name="document-attach-outline"></ion-icon>
+			</ion-item>
+			<ion-item (click) = "about()" style="background-color: rgba(0,0,0,0);">
+			<h3>About Us</h3>
+			<ion-icon slot = "end" name="information-circle-outline"></ion-icon>
+			</ion-item>
+			<ion-item *ngIf = "!isPrem" (click) = "requestPrem()" style="background-color: rgba(0,0,0,0);">
+			<h3>Request premium</h3>
+			<ion-icon slot = "end" name="cash-outline"></ion-icon>
+			</ion-item>
+			<ion-item  color="success" *ngIf = "isPrem">
+			<h3>Premium Access</h3>
+			<ion-icon slot = "end" name="cash-outline"></ion-icon>
+			</ion-item>
+			<ion-item color = "danger" (click) = "logout()" style="background-color: rgba(0,0,0,0);">
+			<h3>logout</h3>
+			<ion-icon slot = "end" name="log-out-outline"></ion-icon>
+			</ion-item>
+			</ion-list>
+		</ion-card-content>
+	</ion-card>
+</ion-content>

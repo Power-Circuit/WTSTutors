@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { ToastController, LoadingController,AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -20,9 +21,18 @@ imgurl: any = 'https://firebasestorage.googleapis.com/v0/b/wtstutors.appspot.com
     usrName;
 	grd;
 	descri;
- constructor(private imagePicker: ImagePicker,private router: Router,public afstore: AngularFirestore,public storage: AngularFireStorage,public usr: UserService,public zone: NgZone,public imgServ: ImagehandlerService,private camera: Camera) {
+	isPicChanged = false;
+ constructor(private imagePicker: ImagePicker,public loadingController: LoadingController,public toastCtrl: ToastController,private router: Router,public afstore: AngularFirestore,public storage: AngularFireStorage,public usr: UserService,public zone: NgZone,public imgServ: ImagehandlerService,private camera: Camera) {
 	  }
-
+	
+	 async presentToast(msg) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 5000
+    });
+    toast.present();
+  }
+  
 	ionViewWillEnter(){
 		this.usrName = this.usr.user.username;
 		this.grd = this.usr.user.grd;
@@ -42,6 +52,8 @@ imgurl: any = 'https://firebasestorage.googleapis.com/v0/b/wtstutors.appspot.com
           reader.readAsDataURL(this.imgBlob);
           reader.onloadend = () => {
             this.imgurl = reader.result;
+			this.usr.editUrl = this.imgurl;
+			this.isPicChanged = true;
           }
         err => {
             // display error
@@ -57,34 +69,49 @@ imgurl: any = 'https://firebasestorage.googleapis.com/v0/b/wtstutors.appspot.com
 		this.usr.user.username = this.usrName;
 		this.usr.user.grd = this.grd;
 		this.usr.user.bio = this.descri;
-			 this.afstore.doc('userprofiles/' + this.usr.getUid()).set(this.usr.user).then(() => {
+			 this.afstore.doc('userprofiles/' + this.usr.getUid()).update(this.usr.user).then(() => {
 				 //this.uploadFile(this.les);
-					alert("Updated profile");
+					this.presentToast("Updated profile!");
 					this.navigateDash();
 
 				}).catch((err) => {
-				alert("error: " + err);
+				this.presentToast("error: " + err);
 			});
 		
 	}
 
-	proceed(){
-		const uid = this.usr.getUid();
-		const dot = "pic";
-		const uploadTask = this.storage.upload(
-		   `ProfilePics/${uid}_${dot}`,
-		  this.imgBlob
-		);
-		uploadTask.percentageChanges().subscribe(change => {
-		  this.uploadProgress = change;
-		});
-		uploadTask.then(async res => {
-			alert("upload success: " + res);
+	async proceed(){
+				  const loading = await this.loadingController.create({
+      cssClass: 'profileselect',
+      message: 'Updating profile...',
+      
+    });
+	
+		if(this.isPicChanged == true){
+			loading.present()
+			const uid = this.usr.getUid();
+			const dot = "pic";
+			const uploadTask = this.storage.upload(
+			   `ProfilePics/${uid}_${dot}`,
+			  this.imgBlob
+			);
+			uploadTask.percentageChanges().subscribe(change => {
+			  this.uploadProgress = change;
+			});
+			uploadTask.then(async res => {
+				loading.dismiss();
+				//this.presentToast("Updated profile picture (NB: old photos are inprinted on old comments. ");
+				this.upload();
+			
+			}).catch((err) => {
+				loading.dismiss();
+				this.presentToast("error: " + err.code);
+			});
+			
+		}
+		else{
 			this.upload();
-		
-		}).catch((err) => {
-			alert("error: " + err.code);
-		});
+		}
 	}
 
 	

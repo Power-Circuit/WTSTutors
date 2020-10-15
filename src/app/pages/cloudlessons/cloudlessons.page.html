@@ -1,13 +1,16 @@
 <ion-header>
   <ion-toolbar color="white" mode="ios">
-    <ion-title color = "primary" class="ion-float-center header" >Online Lessons  <ion-icon color = "primary" name="easel-outline"></ion-icon></ion-title>
-		<ion-button  class="headerButton"   fill="clear" size="default" routerLink="/dashboard" routerDirection="forward" right>
-</ion-button>
-	 <ion-buttons slot="start">
-	  <ion-back-button color="primary" class=" header">
-		</ion-back-button>
-			
-		</ion-buttons> 
+    <ion-title color = "primary" class="ion-float-center header" >WTS Lessons  <ion-icon *ngIf = "!isPrem" color = "primary" name="easel-outline"></ion-icon><ion-icon *ngIf = "isPrem" color = "tertiary" name="ribbon-outline"></ion-icon></ion-title>
+		<ion-buttons  slot="start">
+	<ion-button  class="headerButton"  color="secondary"  fill="clear" size="default" (click) = "presentPopover($event)" right>
+	<ion-icon name="menu-outline"></ion-icon>
+	</ion-button>
+	
+	 </ion-buttons>
+			<ion-button  class="headerButton" *ngIf="isAdmin"  color="secondary"  fill="clear" size="default" (click) = "viewAdmin()" right>
+	Admin 
+	</ion-button>
+		
 <ion-avatar (click)="navigateEdit()" class="ion-float-right">
 		<img src="{{proPic}}" alt="Unable to load Image." >
 	</ion-avatar>
@@ -53,19 +56,19 @@
 		   </ion-grid>
   </ion-toolbar>
 		
-			<ion-card style="z-index: 2;position:relative;background-color: rgba(0,0,0,0);"    >
+			<ion-card style="z-index: 2;position:relative;box-shadow: 30;background-color: rgba(0, 64, 128,0);"    >
 			<ion-card   class = "card slideInUp" *ngFor = "let item of currentLessons ">
 				<ion-card-header class="headerCard" style="border-radius: 100px;">
 					<ion-grid style="border-radius: 100px;">
 					<ion-row style="border-radius: 200px;" baseline>
-					<ion-col size="4" style="background-color: rgba(255,255,255,0);color: #fff;">
+					<ion-col class="ion-text-wrap" size="3" style="background-color: rgba(255,255,255,0);color: #fff;">
 					
 					<p >Subject: {{item.Subject}}</p>
 					</ion-col>
-					<ion-col size="4" style="font-size: 20px;text-align: center;background-color: rgba(0,0,0,1);color: #fff;">
+					<ion-col class="ion-text-wrap" size="7" style="font-size: 20px;text-align: center;background-color: rgba(0,0,0,1);color: #fff;">
 					<p>{{item.lessonName}}</p>
 					</ion-col>
-					<ion-col size="4" style="text-align: center;background-color: rgba(255,255,255,0);color: #fff;">
+					<ion-col class="ion-text-wrap" size="2" style="text-align: center;background-color: rgba(255,255,255,0);color: #fff;">
 					<p >Grade: {{item.Grade}}</p>
 					</ion-col>
 					</ion-row>
@@ -77,9 +80,14 @@
 					<img src={{item.slides[0]}} (click)="viewLesson(item)">
 
 				</ion-card-content>
+				<ion-button (click) = "navigateComment(item)"   >
+				<ion-icon style="color: #fff;" class ="my-icon"  name="chatbox-outline"></ion-icon>
+				<p style="color: #fff;">&nbsp; Comment</p>
+				</ion-button>
 				</ion-card>   
 				<div class="vertline">
 				</div>
+				
 			</ion-card>
 			
 	

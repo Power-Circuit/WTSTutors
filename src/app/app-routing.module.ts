@@ -8,19 +8,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
 
- /* {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },*/
-  
   {
     path: 'tutorial',
     loadChildren: () => import('./pages/tutorial/tutorial.module').then( m => m.TutorialPageModule)
   },
-  {
-    path: 'land',
-    loadChildren: () => import('./pages/land/land.module').then( m => m.LandPageModule)
-  },
+ 
   {
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
@@ -52,14 +44,7 @@ const routes: Routes = [
     path: 'cloudlessons',
     loadChildren: () => import('./pages/cloudlessons/cloudlessons.module').then( m => m.CloudlessonsPageModule)
   },
-  {
-    path: 'uploadlesson',
-    loadChildren: () => import('./pages/uploadlesson/uploadlesson.module').then( m => m.UploadlessonPageModule)
-  },
-  {
-    path: 'playvid',
-    loadChildren: () => import('./pages/playvid/playvid.module').then( m => m.PlayvidPageModule)
-  },
+ 
   {
     path: 'viewlesson',
     loadChildren: () => import('./pages/viewlesson/viewlesson.module').then( m => m.ViewlessonPageModule)
@@ -71,6 +56,31 @@ const routes: Routes = [
   {
     path: 'editprofile',
     loadChildren: () => import('./pages/editprofile/editprofile.module').then( m => m.EditprofilePageModule)
+  },
+ 
+  {
+    path: 'comment',
+    loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
+  },
+  {
+    path: 'aboutus',
+    loadChildren: () => import('./pages/aboutus/aboutus.module').then( m => m.AboutusPageModule)
+  },
+  {
+    path: 'requestpremium',
+    loadChildren: () => import('./pages/requestpremium/requestpremium.module').then( m => m.RequestpremiumPageModule)
+  },
+  {
+    path: 'adminrequests',
+    loadChildren: () => import('./pages/adminrequests/adminrequests.module').then( m => m.AdminrequestsPageModule)
+  },
+  {
+    path: 'studyguide',
+    loadChildren: () => import('./pages/studyguide/studyguide.module').then( m => m.StudyguidePageModule)
   },
 
 ];

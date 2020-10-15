@@ -1,0 +1,84 @@
+.background{
+	margin-top: 85%;
+}
+
+.chatwindow{
+		top: 0%;
+		width: 100%;
+		background-color: rgb(255,255,255);
+		position: relative;
+		
+		
+	}
+	
+	.foots{
+	
+		z-index: 999;
+		bottom: 0%;
+		background-color: rgba(255,255,255,0.1);
+		color: rgba(0,0,0,1);
+		height:10%;
+		
+		ion-button{
+			top: 50%;
+		}
+
+	}
+	
+	
+
+
+
+.item{
+	
+	background-color: rgba(255,255,255,0);
+	.text-input {
+		color: #000;
+	}
+}
+	
+	.thembubble{
+		background-color: rgba(255,255,255,1);
+		color: rgba(0,0,0,1);
+		border-radius: 5px;
+		box-shadow: 0 0 6px #f4a024;
+		display: inline-block;
+		padding: 18px 10px;
+		position: relative;
+		white-space: -moz-pre-wrap;
+		vertical-align: top;
+		height: 90%;
+		width: 60%;
+		right: 7%;
+	}
+	
+	.themAvatar{
+		
+		box-shadow: 0 0 6px #f4a024;
+	
+	}
+	
+	.myAvatar{
+		
+		box-shadow: 0 0 6px #00a;
+	
+	}
+	
+	
+	
+	.mybubble{
+		background-color: rgba(255,255,255,1);
+		color: rgba(0,0,0,1);
+		border-radius: 5px;
+		box-shadow: 0 0 6px #00a;
+		display: inline-block;
+		padding: 10px 18px;
+		white-space: -moz-pre-wrap;
+		position: relative;
+		vertical-align: top;
+		left: 7%;
+		height: 90%;
+		width: 70%;
+		
+	}
+

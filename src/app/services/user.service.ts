@@ -4,9 +4,12 @@ interface user{
 	username: string,
 	uid: string,
 	email: string,
-	propic: Blob,
+	propic: string,
 	bio: string,
-	grd: string
+	grd: string,
+	type: string,
+	xpDate: any,
+	refNum: string
 }
 
 @Injectable({
@@ -16,9 +19,11 @@ interface user{
 
 
 export class UserService {
-	
+	fireUser: any;
 	public user: any;
 	editUrl ='';
+	isAdmin = false;
+	isPrem = false;
   constructor() { }
   
   setUser(user: user){

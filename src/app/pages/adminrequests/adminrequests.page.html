@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar  color="white" mode="ios">
+    <ion-title>Premium Requests</ion-title>
+	<ion-buttons slot="start">
+	  <ion-back-button color="primary" class="ion-float-left header">
+		</ion-back-button>
+		
+		</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div class="chatwindow">
+	
+	<ion-list lines="none" style="height: 85%;width: 100%;background-color: rgba(255,255,255,0);" >
+  <ion-item-sliding *ngFor = "let item of comments; let i = index">
+	<ion-item   color="white" text-wrap >
+	
+	<ion-avatar class= "myAvatar"	slot="start" >
+		<img src="{{item.propic}}">
+	</ion-avatar>
+		<div class="ion-float-left mybubble" style="width: 100%;" text-wrap>
+
+		<p class ="ion-float-center" style="color: #294a70;float: center">{{item.username}}</p>
+		<h5 style="color: #000;">{{item.refNum}}</h5>
+</div>
+</ion-item >
+ <ion-item-options>
+      <ion-item-option>
+      <ion-button color="danger" (click) = "deletePrompt(item)"> Decline <ion-icon slot="end" name="backspace-outline"></ion-icon></ion-button>
+        
+      </ion-item-option>
+      <ion-item-option >
+      <ion-button color="success" (click) = "grantConfirm(item)">  Grant Premium <ion-icon slot = "start" name="cash-outline"></ion-icon></ion-button>
+       
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+	
+	</ion-list>
+	
+	</div>
+</ion-content>

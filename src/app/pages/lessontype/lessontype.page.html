@@ -1,17 +1,20 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>lessontype</ion-title>
-	<ion-button routerLink="/chalkboard" routerDirection="forward" right>
-	Start
-	</ion-button>
+    <ion-title>Lesson type</ion-title>
+	<ion-buttons slot="start">
+	  <ion-back-button color="primary" class=" header">
+		</ion-back-button>
+			
+		</ion-buttons> 
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-list>
-	<ion-input type="text" placeholder="Lesson title" [(ngModel)]="les.lessonName"></ion-input>
+<ion-card class = "card">
+	<ion-list style="background-color: rgba(0,0,0,0);" no-lines>
+	<ion-input type="text" style = "color: #fff;" placeholder="Lesson title" [(ngModel)]="les.lessonName"></ion-input>
 		 
-		<ion-item>
+		<ion-item style="background-color: rgba(0,0,0,0.2);">
 			<ion-label>Grade</ion-label>
 		   <ion-select [(ngModel)]="les.Grade" [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
           <ion-select-option value="12">Grade 12</ion-select-option>
@@ -22,7 +25,7 @@
           </ion-select>
       </ion-item>
 	  
-		 <ion-item>
+		 <ion-item style="background-color: rgba(0,0,0,0.2);">
         <ion-label>Subject</ion-label>
 		
         <ion-select  [(ngModel)]="les.Subject" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One">
@@ -39,4 +42,5 @@
 	<ion-button (click)="save()" right>
 	Save
 	</ion-button>
+	</ion-card>
 </ion-content>

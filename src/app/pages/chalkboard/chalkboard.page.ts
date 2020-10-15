@@ -5,6 +5,9 @@ import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { LessonService } from '../../services/lesson.service';
+import { ImagehandlerService } from '../../services/imagehandler.service';
+import { ToastController, LoadingController,AlertController } from '@ionic/angular';
+
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -17,6 +20,8 @@ export class ChalkboardPage {
 	@ViewChild('imageCanvas', {static: false}) canvas: any;
 	isDrawing = false; //check if user is pressing on board or not
 	//canvasElement: any;
+	imgBlob: any = null;
+	imgurl: any = "";
 	saveX: number; //track x coordinate of touch
 	saveY: number; //track y coordinate of touch
 	nativepath: any; //track path of fetchd image
@@ -24,8 +29,8 @@ export class ChalkboardPage {
 	colors = ['#ff0','#f00', '#0f0','#00f', '#0ff','#fff','#000']; //array of availale colors
 	lineWidth = 5; //track drawing line width
 	canvasElement: any; //object to store canvas object
-		lastX; //track last x coordinate of touch
-		lastY; //track last r coordinate of touch
+		lastX; //track last x coordinate of touch.
+		lastY; //track last r coordinate of touch.
       options: any; 
 	les = {
 			lessonName: '',
@@ -39,7 +44,7 @@ export class ChalkboardPage {
 	slides = [];
 	lessons = [];
 	tutorials = [];
- constructor(private plt: Platform,private storage: Storage,public ls: LessonService,private imagePicker: ImagePicker, public renderer: Renderer2, public filechooser: FileChooser, public zone: NgZone) {}
+ constructor(private plt: Platform,public toastCtrl: ToastController,public imgServ: ImagehandlerService,private storage: Storage,public ls: LessonService,private imagePicker: ImagePicker, public renderer: Renderer2, public filechooser: FileChooser, public zone: NgZone) {}
   
   ngAfterViewInit(){//inizialize drawing board
 		this.les = this.ls.les;
@@ -56,7 +61,7 @@ export class ChalkboardPage {
 			if(val == null){
 				
 				
-				console.log("recieved no lessons");
+				
 			}				
 			else{
 				this.lessons = val;
@@ -131,12 +136,57 @@ export class ChalkboardPage {
 	  
 	  
 	  this.storage.set('myLessons', this.lessons);
-	  alert("saved tutorial pics!");
+	  this.presentToast("Saved to slides!");
 	
 		
 		
 	  
 	}
+	
+		getImages(){
+			 var ctx = this.canvasElement.getContext('2d');
+        var source = new Image();
+		this.imgServ.fetchImageBlob().then((res) => {
+			this.zone.run(() => {
+				var reader = new FileReader();
+				this.imgBlob = res;
+          reader.readAsDataURL(this.imgBlob);
+          reader.onloadend = () => {
+            this.imgurl = reader.result;
+          }
+        err => {
+            // display error
+			alert("error trying to read blob...");
+        }
+				
+			})
+		}).then(() => {
+			this.drawOnCanvas();
+		});
+	}
+	
+	    drawOnCanvas(){
+        var ctx = this.canvasElement.getContext('2d');
+        var source = new Image();
+		this.zone.run(() => {
+            source.src = this.imgurl;
+            source.crossOrigin = 'Anonymous';
+            source.onload = () => {
+                ctx.drawImage(source, 0, 0, this.canvasElement.width, this.canvasElement.height);
+            };
+            source.src = this.imgurl;
+		})
+        
+    }
+	
+	 async presentToast(msg) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
+  }
+  
   
   
  

@@ -5,12 +5,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class = "back">
 	<ion-card class = "card">
 		<ion-card-header>
 			Login
 		</ion-card-header>
-		<ion-card-content class="">
+		<ion-card-content class="ion-justify-content-center">
 			<ion-list style="background-color: rgba(0,0,0,0);" no-lines>
 			<div class ="spacer" style="height: 10px;"></div>
 			<ion-item style="background-color: rgba(0,0,0,0.2);">
@@ -21,12 +21,11 @@
 				<ion-input type="password" placeholder="Password" [(ngModel)] = "password1"></ion-input>
 			</ion-item>
 			<div class ="spacer" style="height: 10px;"></div>
-			<a style="color: #f4a024; ">Forgot your login details?</a>
+			<a style="color: #f4a024; " (click) = "forgot()">Forgot your login details?</a>
 			<div class ="spacer" style="height: 10px;"></div>
-			<ion-button block outline round color="light" (click)="login()">Login</ion-button>
+			<ion-button   block outline round color="light" (click)="login()">Login</ion-button>
 			<div class ="spacer" style="height: 10px;"></div>
-			<ion-button block full clear routerLink="/register" color="primary" routerDirection="forward" >Dont have an account? Sign up!</ion-button>
-
+			<ion-button block full clear routerLink="/register" color="primary" routerDirection="forward" >Dont have an account yet? Sign up!</ion-button>
 			</ion-list>
 		</ion-card-content>
 	</ion-card>

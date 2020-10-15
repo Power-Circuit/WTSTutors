@@ -1,24 +1,28 @@
 <ion-header>
   <ion-toolbar color="white" mode="ios">
     <ion-title color = "primary" class="ion-float-center header" >Dashboard  <ion-icon color = "secondary" name="easel-outline"></ion-icon></ion-title>
-	 <ion-buttons  slot="end">
-	<ion-button  class="headerButton"  color="secondary"  fill="clear" size="default" routerLink="/cloudlessons" routerDirection="forward" right>
-	Online
+	
+	<ion-buttons  slot="start">
+	<ion-button  class="headerButton"  color="secondary"  fill="clear" size="default" routerLink="/adminrequests" routerDirection="forward" right>
+	<ion-icon *ngIf = "!hasRequests" name="mail-outline"></ion-icon><ion-icon *ngIf = "hasRequests" name="mail-unread-outline"></ion-icon>
 	</ion-button>
 	
 	 </ion-buttons>
-		 <ion-buttons  slot="start">
-		 <ion-button  class="headerButton"  color="secondary"  fill="clear" size="default" routerLink="/profileselect" routerDirection="forward" right>
-	log
+		<ion-buttons  slot="end">
+	<ion-button  class="headerButton"  color="secondary"  fill="clear" size="default" routerLink="/cloudlessons" routerDirection="forward" right>
+	<ion-icon name="school-outline"></ion-icon>
 	</ion-button>
-		 </ion-buttons >
+	
+	 </ion-buttons>
+		
+	
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content style="backgound-color: #fff;">
 
-<ion-progress-bar [value] = "uploadProgress" color = "secondary">
+<ion-progress-bar slot="fixed" [value] = "uploadProgress" color = "secondary">
 </ion-progress-bar>
 <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
 <ion-refresher-content>

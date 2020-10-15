@@ -1,0 +1,24 @@
+ion-card.card {
+		
+		box-shadow: 40;
+		background-color: rgba(0,64,128,.5);
+		border-radius: 5px;
+		margin: auto;
+	
+}
+
+a,p,
+ion-card-header.card-header {
+	color: #f4a024!important;
+}
+
+.list > .item-block:first-child {
+		border: medium none;
+}
+
+.login{
+	--background: #222;
+  --spinner-color: #fff;
+
+  color: #fff;
+}
